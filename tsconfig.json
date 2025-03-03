@@ -12,7 +12,7 @@
     "sourceMap": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
   },
   "include": ["src", "test"]
 }
