@@ -25,9 +25,9 @@ export class InvalidStateInputError {}
 
 export class StateDecoder {
   decode(state: string): Result<StatePayload, InvalidStateInputError> {
-    const eventStrings = state.split("\n").filter((s) => s.length > 0);
-
     try {
+      const eventStrings = state.split("\n").filter((s) => s.length > 0);
+      
       const data = eventStrings.map((eventString) => {
         const properties = eventString.split(",");
 
