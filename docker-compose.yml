@@ -1,6 +1,21 @@
-version: '3'
+version: "3"
 
 services:
+  api:
+    depends_on:
+      - simulation
+    build:
+      target: dev
+    environment:
+      PORT: 3001
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./:/api/
+      - /api/node_modules/
+    tty: true
+    stdin_open: true
+
   simulation:
     image: mysteriouscrawler/test
     ports:
