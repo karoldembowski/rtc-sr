@@ -29,7 +29,7 @@ export class StateDecoder {
       const eventStrings = state.split("\n").filter((s) => s.length > 0);
       
       const data = eventStrings.map((eventString) => {
-        const properties = eventString.split(",");
+        const properties = eventString.split(",").filter(s => s.length > 0);
 
         const scoresProp = properties[7];
         const scores =
