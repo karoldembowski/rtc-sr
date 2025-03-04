@@ -3,8 +3,8 @@ import { z } from "zod";
 
 const ScoreSchema = z.object({
   periodId: z.string().nonempty(),
-  homeScore: z.coerce.number(),
-  awayScore: z.coerce.number(),
+  homeScore: z.string(),
+  awayScore: z.string(),
 });
 
 const EventDataSchema = z.object({

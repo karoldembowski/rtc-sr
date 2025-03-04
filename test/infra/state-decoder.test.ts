@@ -39,13 +39,13 @@ describe("StateDecoder", () => {
             scores: [
               {
                 periodId: "e2d12fef-ae82-4a35-b389-51edb8dc664e",
-                homeScore: 1,
-                awayScore: 2,
+                homeScore: '1',
+                awayScore: '2',
               },
               {
                 periodId: "6c036000-6dd9-485d-97a1-e338e6a32a51",
-                homeScore: 1,
-                awayScore: 2,
+                homeScore: '1',
+                awayScore: '2',
               },
             ],
           },

@@ -4,16 +4,21 @@ export class StateUpdatedEvent {
   constructor(public readonly payload: StatePayload) {}
 }
 
-export type StateMessages = StateUpdatedEvent;
+export type StateMessage = StateUpdatedEvent;
 
 export interface StateQueue {
-  sendMessage: (message: StateMessages) => Promise<void>;
+  sendMessage: (message: StateMessage) => Promise<void>;
+  readMessage: () => Promise<StateMessage | null>;
 }
 
 export class InMemoryStateQueue implements StateQueue {
-  private queue: StateMessages[] = [];
+  private queue: StateMessage[] = [];
 
-  async sendMessage(message: StateMessages): Promise<void> {
+  async sendMessage(message: StateMessage): Promise<void> {
     this.queue.push(message);
+  }
+
+  async readMessage(): Promise<StateMessage | null> {
+    return this.queue.shift() ?? null;
   }
 }
