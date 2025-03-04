@@ -7,16 +7,30 @@ import { StateDecoder } from "./infra/state-decoder";
 import { InMemoryStateQueue } from "./infra/state-queue";
 import { StateUpdatesConsumer } from "./infra/state-updates-consumer";
 import { StatesUpdateCron } from "./infra/state-updates-cron";
-
-console.log("hello world");
+import { serve } from "@hono/node-server";
+import { Hono } from "hono";
 
 const stateDecoder = new StateDecoder();
 const mappingsDecoder = new MappingsDecoder();
-const que = new InMemoryStateQueue();
+const queue = new InMemoryStateQueue();
 const mappingsStorage = new InMemoryMappingsStorage(mappingsDecoder);
 const sportEventsStorage = new InMemorySportEventsStorage();
 const transformer = new StateToSportEventsTransformer(mappingsStorage);
 const loader = new SportEventsLoader(sportEventsStorage);
 
-const cron = new StatesUpdateCron(stateDecoder, que);
-const consumer = new StateUpdatesConsumer(que, transformer, loader);
+const cron = new StatesUpdateCron(stateDecoder, queue);
+const consumer = new StateUpdatesConsumer(queue, transformer, loader);
+
+const app = new Hono();
+
+app.get("/client/state", async (ctx) => {
+  const events = await sportEventsStorage.getAllNotRemovedEvents();
+  const response = Object.fromEntries(events.map((e) => [e.id, e]));
+  return ctx.json(response, 200);
+});
+
+serve({
+  port: Number(process.env.PORT),
+  fetch: app.fetch,
+});
+console.log(`Server running on http://localhost:${process.env.PORT}/`);
