@@ -1,7 +1,9 @@
 version: "3"
 
 services:
-  api:
+  api-dev:
+    profiles:
+      - dev
     depends_on:
       - simulation
     build:
@@ -15,6 +17,19 @@ services:
       - /api/node_modules/
     tty: true
     stdin_open: true
+
+  api:
+    profiles:
+      - prod
+    depends_on:
+      - simulation
+    build:
+      target: prod
+    environment:
+      PORT: 3001
+      NODE_ENV: production
+    ports:
+      - "3001:3001"
 
   simulation:
     image: mysteriouscrawler/test
