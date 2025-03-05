@@ -1,10 +1,12 @@
 ## How to run
 
-To run the all services:
+### To run the all services:
 
 `docker compose --profile prod up`
 
-To run in dev mode:
+The server will be up an running on `http://localhost:3001`
+
+### To run in dev mode:
 
 `docker compose --profile dev up -d`
 
